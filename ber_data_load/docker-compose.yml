@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  python-dev-container:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./scripts:/app/scripts
+    ports:
+      - 5000:5000
+    environment:
+      - PYTHONPATH=/app
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=someThingComplicated1234@
+
+    depends_on:
+      - sql-server-container
+
+  sql-server-container:
+    image: mcr.microsoft.com/mssql/server:latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Express
+      - SA_PASSWORD=someThingComplicated1234@
+    ports:
+      - 1433:1433
